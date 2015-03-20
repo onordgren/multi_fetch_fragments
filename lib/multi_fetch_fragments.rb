@@ -14,6 +14,8 @@ module MultiFetchFragments
         spacer = find_template(@options[:spacer_template]).render(@view, @locals)
       end
 
+      puts @collection.inspect
+
       results = []
 
       if cache_collection?
@@ -83,7 +85,7 @@ module MultiFetchFragments
       ActionController::Base.perform_caching && cache_option
     end
 
-    # from Rails fragment_cache_key in ActionController::Caching::Fragments. Adding it here since it's tucked inside an instance method on the controller, and 
+    # from Rails fragment_cache_key in ActionController::Caching::Fragments. Adding it here since it's tucked inside an instance method on the controller, and
     # it's utility could be used in a view without a controller
     def fragment_cache_key(key)
       ActiveSupport::Cache.expand_cache_key(key.is_a?(Hash) ? url_for(key).split("://").last : key, :views)
