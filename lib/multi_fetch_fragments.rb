@@ -14,7 +14,7 @@ module MultiFetchFragments
         spacer = find_template(@options[:spacer_template]).render(@view, @locals)
       end
 
-      puts @collection.inspect
+      puts @options[:includes] if @options.key?(:includes)
 
       results = []
 
