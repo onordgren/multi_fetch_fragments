@@ -14,9 +14,6 @@ module MultiFetchFragments
         spacer = find_template(@options[:spacer_template]).render(@view, @locals)
       end
 
-      puts @options.inspect
-      puts @locals.inspect
-
       results = []
 
       if cache_collection?
@@ -57,8 +54,10 @@ module MultiFetchFragments
 
         # sequentially render any non-cached objects remaining
         if @collection.any?
-          @collection = @options[:partial].titleize.constantize.where(id: @collection.map(&:id)).includes(includes)
-          puts @collection.inspect
+          if includes.any?
+            # Build a new query with the sql includes
+            @collection = @options[:partial].titleize.constantize.where(id: @collection.map(&:id)).includes(includes)
+          end
           non_cached_results = @template ? collection_with_template : collection_without_template
         end
 
