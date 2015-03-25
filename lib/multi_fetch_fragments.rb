@@ -56,7 +56,7 @@ module MultiFetchFragments
         if @collection.any?
           if includes.any?
             # Build a new query with the sql includes
-            @collection = @options[:partial].titleize.constantize.where(id: @collection.map(&:id)).includes(includes)
+            @collection = @collection.first.class.where(id: @collection.map(&:id)).includes(includes)
           end
           non_cached_results = @template ? collection_with_template : collection_without_template
         end
