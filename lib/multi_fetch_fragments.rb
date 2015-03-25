@@ -57,7 +57,7 @@ module MultiFetchFragments
 
         # sequentially render any non-cached objects remaining
         if @collection.any?
-          @collection = @collection.includes(includes)
+          puts @collection.inspect
           non_cached_results = @template ? collection_with_template : collection_without_template
         end
 
