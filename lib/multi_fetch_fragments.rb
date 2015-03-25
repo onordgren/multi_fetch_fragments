@@ -20,7 +20,7 @@ module MultiFetchFragments
       results = []
 
       if cache_collection?
-
+        includes = @options[:includes] || []
         additional_cache_options = @options[:cache_options] || @locals[:cache_options] || {}
         keys_to_collection_map = {}
 
@@ -57,6 +57,7 @@ module MultiFetchFragments
 
         # sequentially render any non-cached objects remaining
         if @collection.any?
+          @collection = @collection.includes(includes)
           non_cached_results = @template ? collection_with_template : collection_without_template
         end
 
