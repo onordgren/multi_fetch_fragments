@@ -55,8 +55,9 @@ module MultiFetchFragments
         # sequentially render any non-cached objects remaining
         if @collection.any?
           if includes.any?
+            ids = @collection.map(&:id)
             # Build a new query with the sql includes
-            @collection = @collection.first.class.where(id: @collection.map(&:id)).includes(includes)
+            @collection = @collection.first.class.base_class.where(id: ids).includes(includes)
           end
           non_cached_results = @template ? collection_with_template : collection_without_template
         end
